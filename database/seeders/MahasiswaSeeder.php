@@ -18,8 +18,9 @@ class MahasiswaSeeder extends Seeder
         DB::table('Mahasiswa')->insert([
             'nim' => '1941720142',
             'nama' => 'Reynaldi Ramadhani',
-            'kelas' => 'TI2D',
+            'email'=>'nexrey19@gmail.com',
             'jurusan' => 'JTI',
+            'tanggal_lahir' => '19-12-2000',
             'no_handphone' => '08123456789',
         ]);
     }
