@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Mahasiswa;
+use App\Models\Kelas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -14,19 +15,23 @@ class MahasiswaController extends Controller
      */
     public function index(Request $request)
     {
-        $mahasiswa = Mahasiswa::where([
-            ['nama','!=',Null],
-            [function($query)use($request){
-                if (($term = $request->term)) {
-                    $query->orWhere('nama','LIKE','%'.$term.'%')->get();
-                }
-            }]
-        ])
-        ->orderBy('nim','desc')
-        ->simplePaginate(5);
+        // $mahasiswa = Mahasiswa::where([
+        //     ['nama','!=',Null],
+        //     [function($query)use($request){
+        //         if (($term = $request->term)) {
+        //             $query->orWhere('nama','LIKE','%'.$term.'%')->get();
+        //         }
+        //     }]
+        // ])
+        // ->orderBy('nim','desc')
+        // ->simplePaginate(5);
         
-        return view('users.index' , compact('mahasiswa'))
-        ->with('i',(request()->input('page',1)-1)*5);
+        // return view('users.index' , compact('mahasiswa'))
+        // ->with('i',(request()->input('page',1)-1)*5);
+
+        $mahasiswa = Mahasiswa::with('kelas')->get();
+        $paginate = Mahasiswa::orderBy('nim','asc')->simplePaginate(3);
+        return view('users.index',['mahasiswa'=>$mahasiswa,'paginate'=>$paginate]);
 
     }
 
@@ -115,6 +120,7 @@ class MahasiswaController extends Controller
          return redirect()->route('mahasiswa.index')
          -> with('success', 'Mahasiswa Berhasil Dihapus');
     }
+
 };
     /**
      * Remove the specified resource from storage.
