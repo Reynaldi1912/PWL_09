@@ -32,24 +32,16 @@ nput.<br><br>
  <input type="text" name="Nama" class="form-control" id="Nama" value="{{ $Mahasiswa->nama }}" aria-describedby="Nama" > 
  </div>
  <div class="form-group">
- <label for="Kelas">Kelas</label> 
- <input type="Kelas" name="Kelas" class="form-control" id="Kelas" value="{{ $Mahasiswa->kelas }}" aria-describedby="Kelas" > 
+ <label for="Kelas">Kelas</label>
+    <select name="Kelas" class="form-control">
+        @foreach($kelas as $kls)
+            <option value="{{$kls->id}}" {{$Mahasiswa->kelas->id?'selected' : ''}}>{{$kls->nama_kelas}}</option>
+        @endforeach
+    </select>
  </div>
  <div class="form-group">
  <label for="Jurusan">Jurusan</label> 
  <input type="Jurusan" name="Jurusan" class="form-control" id="Jurusan" value="{{ $Mahasiswa->jurusan }}" aria-describedby="Jurusan" > 
- </div>
- <div class="form-group">
- <label for="Email">Email</label> 
- <input type="Email" name="Email" class="form-control" id="Email" value="{{ $Mahasiswa->email }}" aria-describedby="Email" > 
- </div>
- <div class="form-group">
- <label for="No_Handphone">No_Handphone</label> 
- <input type="No_Handphone" name="No_Handphone" class="form-control" id="No_Handphone" value="{{ $Mahasiswa->no_handphone }}" aria-describedby="No_Handphone" > 
- </div>
- <div class="form-group">
- <label for="Tanggal_Lahir">Tanggal Lahir</label> 
- <input type="Tanggal_Lahir" name="Tanggal_Lahir" class="form-control" id="Tanggal_Lahir" value="{{ $Mahasiswa->tanggal_lahir }}" aria-describedby="Tanggal_Lahir" > 
  </div>
  <button type="submit" class="btn btn-primary">Submit</button>
  </form>
