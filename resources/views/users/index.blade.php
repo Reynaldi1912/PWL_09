@@ -60,14 +60,16 @@
  <td>{{ $Mahasiswa->jurusan }}</td>
 
  <td>
- <form action="{{ route('mahasiswa.destroy',$Mahasiswa->nim) }}" method="POST">
- 
- <a class="btn btn-info" href="{{ route('mahasiswa.show',$Mahasiswa->nim) }}">Show</a>
- <a class="btn btn-primary" href="{{ route('mahasiswa.edit',$Mahasiswa->nim) }}">Edit</a>
- @csrf
- @method('DELETE')
- <button type="submit" class="btn btn-danger">Delete</button>
- </form>
+    <form action="{{ route('mahasiswa.destroy',$Mahasiswa->nim) }}" method="POST">
+    
+        <a class="btn btn-info" href="{{ route('mahasiswa.show',$Mahasiswa->nim) }}">Show</a>
+        <a class="btn btn-primary" href="{{ route('mahasiswa.edit',$Mahasiswa->nim) }}">Edit</a>
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a class="btn btn-warning" href="{{  route('users.nilai', $Mahasiswa->nim) }}">Nilai</a>
+
+    </form>
  </td>
  </tr>
  @endforeach
