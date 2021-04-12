@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Mahasiswa;
 use App\Models\Kelas;
+use App\Models\Nilai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -58,23 +59,24 @@ class MahasiswaController extends Controller
         $request->validate([
             'Nim' => 'required',
             'Nama' => 'required',
-            'Kelas' => 'required',
+            'Kelas_Id' => 'required',
             'Jurusan' => 'required',
             ]);
 
-            $mahasiswa  = new Mahasiswa;
+            $mahasiswa  = New Mahasiswa;
             $mahasiswa->nim = $request->get('Nim');
             $mahasiswa->nama = $request->get('Nama');
             $mahasiswa->jurusan = $request->get('Jurusan');
+            $mahasiswa->kelas_id = $request->get('Kelas_Id');
             $mahasiswa->save();
    
-            $kelas = new Kelas;
-            $kelas->id = $request->get('Kelas');
-   
+            // $kelas = new Kelas;
+            // $kelas->id = $request->get('Kelas_Id');
+
 
         //fungsi eloquent untuk menambah data dengan relasi belongsTo
-            $mahasiswa->kelas()->associate($kelas);
-            $mahasiswa->save();
+            // $mahasiswa->kelas()->associate($kelas);
+            // $mahasiswa->save();
         //jika data berhasil ditambahkan, akan kembali ke halaman utama
         return redirect()->route('mahasiswa.index')
         ->with('success', 'Mahasiswa Berhasil Ditambahkan');
@@ -92,6 +94,15 @@ class MahasiswaController extends Controller
         //menampilkan detail data dengan menemukan/berdasarkan Nim Mahasiswa
         $Mahasiswa = Mahasiswa::with('kelas')->where('nim',$nim)->first();
         return view('users.detail', ['Mahasiswa'=>$Mahasiswa]);
+    }
+    public function Nilai($nim){
+        $mahasiswa = Nilai::with('mahasiswa')
+        ->where('mahasiswa_id',$nim)
+        ->first();
+         $nilai = Nilai::with('matakuliah')
+        ->where('mahasiswa_id',$nim)
+        ->get();
+    return view('users.nilai', compact('mahasiswa', 'nilai'));
     }
 
     /**
